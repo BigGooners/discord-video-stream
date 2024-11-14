@@ -1,0 +1,60 @@
+{
+  "name": "@dank074/discord-video-stream",
+  "version": "3.2.0",
+  "description": "Experiment for making video streaming work for discord selfbots",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@dank074/fluent-ffmpeg-multistream-ts": "^1.0.2",
+    "fluent-ffmpeg": "^2.1.2",
+    "libsodium-wrappers": "^0.7.13",
+    "opusscript": "^0.1.1",
+    "prism-media": "^1.3.5",
+    "ws": "^8.16.0"
+  },
+  "devDependencies": {
+    "@types/fluent-ffmpeg": "^2.1.24",
+    "@types/libsodium-wrappers": "^0.7.14",
+    "@types/node": "^20.12.7",
+    "@types/ws": "^8.5.10",
+    "typescript": "^5.4.5"
+  },
+  "peerDependencies": {
+    "discord.js-selfbot-v13": "3.x"
+  },
+  "optionalDependencies": {
+    "@discordjs/opus": "^0.9.0"
+  },
+  "overrides": {
+    "prism-media": {
+      "opusscript": "$opusscript"
+    }
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [
+    "discord",
+    "video",
+    "voice",
+    "stream",
+    "go-live"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dank074/Discord-video-stream.git"
+  },
+  "author": "dank074",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dank074/Discord-video-stream/issues"
+  },
+  "homepage": "https://github.com/dank074/Discord-video-stream#readme"
+}
