@@ -1,0 +1,12 @@
+import ffmpeg from 'fluent-ffmpeg';
+import { MediaUdp } from '../client/voice/MediaUdp';
+import { Readable } from 'stream';
+import PCancelable from 'p-cancelable';
+export declare function streamLivestreamVideo(input: string | Readable, mediaUdp: MediaUdp, includeAudio?: boolean, customHeaders?: Record<string, string>): PCancelable<string>;
+export declare function updateOverlayText(newText: string): Promise<void>;
+export declare function applyColorFilter(brightness: number, contrast: number, saturation: number, hue: number): Promise<void>;
+export declare function jumpToTime(timeInSeconds: number): Promise<void>;
+export declare function changePlaybackSpeed(speedFactor: number): Promise<void>;
+export declare function getInputMetadata(input: string | Readable): Promise<ffmpeg.FfprobeData>;
+export declare function inputHasAudio(metadata: ffmpeg.FfprobeData): boolean;
+export declare function inputHasVideo(metadata: ffmpeg.FfprobeData): boolean;

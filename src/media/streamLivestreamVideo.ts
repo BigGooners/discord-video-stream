@@ -17,7 +17,6 @@ const zmqSocket = new zmq.Request();
 zmqSocket.connect("tcp://127.0.0.1:5555");
 
 export function streamLivestreamVideo(
-console.log('meme');
     input: string | Readable,
     mediaUdp: MediaUdp,
     includeAudio = true,
@@ -154,13 +153,14 @@ export async function updateOverlayText(newText: string) {
 export async function applyColorFilter(brightness: number, contrast: number, saturation: number, hue: number) {
     const command = `hue=b=${brightness}:c=${contrast}:s=${saturation}:h=${hue}`;
     await zmqSocket.send(command);
+}
 
 export async function jumpToTime(timeInSeconds: number) {
     const command = `seek ${timeInSeconds}`;
     await zmqSocket.send(command);
 }
 
-export function changePlaybackSpeed(speedFactor: number) {
+export async function changePlaybackSpeed(speedFactor: number) {
     const command = `setpts=${1 / speedFactor}*PTS`;
     zmqSocket.send(command);
 }
