@@ -30,13 +30,12 @@ const fluent_ffmpeg_multistream_ts_1 = require("@dank074/fluent-ffmpeg-multistre
 const AnnexBNalSplitter_1 = require("../client/processing/AnnexBNalSplitter");
 const VideoStream_1 = require("./VideoStream");
 const utils_1 = require("../utils");
-const p_cancelable_1 = __importDefault(require("p-cancelable"));
 const zeromq_1 = __importDefault(require("zeromq"));
 // ZeroMQ for real-time commands
 const zmqSocket = new zeromq_1.default.Request();
 zmqSocket.connect("tcp://127.0.0.1:5555");
 function streamLivestreamVideo(input, mediaUdp, includeAudio = true, customHeaders) {
-    return new p_cancelable_1.default((resolve, reject, onCancel) => __awaiter(this, void 0, void 0, function* () {
+    return new Promise((resolve, reject) => {
         const streamOpts = mediaUdp.mediaConnection.streamOptions;
         const videoCodec = (0, utils_1.normalizeVideoCodec)(streamOpts.videoCodec);
         const videoStream = new VideoStream_1.VideoStream(mediaUdp, streamOpts.fps, streamOpts.readAtNativeFps);
@@ -140,12 +139,14 @@ function streamLivestreamVideo(input, mediaUdp, includeAudio = true, customHeade
                 }
             }
             command.run();
-            onCancel(() => command.kill("SIGINT"));
         }
         catch (e) {
+            //audioStream.end();
+            //videoStream.end();
+            exports.command = undefined;
             reject("cannot play video " + e.message);
         }
-    }));
+    });
 }
 // Real-time control functions
 function updateOverlayText(newText) {

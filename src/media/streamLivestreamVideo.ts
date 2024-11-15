@@ -9,7 +9,6 @@ import { Readable, PassThrough, Transform } from 'stream';
 import { H264NalSplitter, H265NalSplitter } from '../client/processing/AnnexBNalSplitter';
 import { VideoStream } from './VideoStream';
 import { normalizeVideoCodec } from '../utils';
-import PCancelable from 'p-cancelable';
 import zmq from 'zeromq';
 
 // ZeroMQ for real-time commands
@@ -24,7 +23,7 @@ export function streamLivestreamVideo(
     includeAudio = true,
     customHeaders?: Record<string, string>
 ) {
-    return new PCancelable<string>(async (resolve, reject, onCancel) => {
+    return new Promise<string>((resolve, reject) => {
         const streamOpts = mediaUdp.mediaConnection.streamOptions;
         const videoCodec = normalizeVideoCodec(streamOpts.videoCodec);
         const videoStream = new VideoStream(mediaUdp, streamOpts.fps, streamOpts.readAtNativeFps);
@@ -139,9 +138,12 @@ export function streamLivestreamVideo(
             }
 
             command.run();
-            onCancel(() => command.kill("SIGINT"));
+            
         } catch (e) {
-            reject("cannot play video " + (e as Error).message);
+            //audioStream.end();
+            //videoStream.end();
+            command = undefined;
+            reject("cannot play video " + e.message);
         }
     });
 }
