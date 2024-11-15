@@ -16,6 +16,8 @@ import zmq from 'zeromq';
 const zmqSocket = new zmq.Request();
 zmqSocket.connect("tcp://127.0.0.1:5555");
 
+export let command: ffmpeg.FfmpegCommand;
+
 export function streamLivestreamVideo(
     input: string | Readable,
     mediaUdp: MediaUdp,
@@ -146,23 +148,23 @@ export function streamLivestreamVideo(
 
 // Real-time control functions
 export async function updateOverlayText(newText: string) {
-    const command = `drawtext reinit text='${newText}'`;
-    await zmqSocket.send(command);
+    const vidCommand = `drawtext reinit text='${newText}'`;
+    await zmqSocket.send(vidCommand);
 }
 
 export async function applyColorFilter(brightness: number, contrast: number, saturation: number, hue: number) {
-    const command = `hue=b=${brightness}:c=${contrast}:s=${saturation}:h=${hue}`;
-    await zmqSocket.send(command);
+    const vidCommand = `hue=b=${brightness}:c=${contrast}:s=${saturation}:h=${hue}`;
+    await zmqSocket.send(vidCommand);
 }
 
 export async function jumpToTime(timeInSeconds: number) {
-    const command = `seek ${timeInSeconds}`;
-    await zmqSocket.send(command);
+    const vidCommand = `seek ${timeInSeconds}`;
+    await zmqSocket.send(vidCommand);
 }
 
 export async function changePlaybackSpeed(speedFactor: number) {
-    const command = `setpts=${1 / speedFactor}*PTS`;
-    zmqSocket.send(command);
+    const vidCommand = `setpts=${1 / speedFactor}*PTS`;
+    await zmqSocket.send(vidCommand);
 }
 // Other utility functions
 export function getInputMetadata(input: string | Readable): Promise<ffmpeg.FfprobeData> {

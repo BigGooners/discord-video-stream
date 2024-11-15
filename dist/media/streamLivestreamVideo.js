@@ -12,6 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.command = void 0;
 exports.streamLivestreamVideo = streamLivestreamVideo;
 exports.updateOverlayText = updateOverlayText;
 exports.applyColorFilter = applyColorFilter;
@@ -149,26 +150,26 @@ function streamLivestreamVideo(input, mediaUdp, includeAudio = true, customHeade
 // Real-time control functions
 function updateOverlayText(newText) {
     return __awaiter(this, void 0, void 0, function* () {
-        const command = `drawtext reinit text='${newText}'`;
-        yield zmqSocket.send(command);
+        const vidCommand = `drawtext reinit text='${newText}'`;
+        yield zmqSocket.send(vidCommand);
     });
 }
 function applyColorFilter(brightness, contrast, saturation, hue) {
     return __awaiter(this, void 0, void 0, function* () {
-        const command = `hue=b=${brightness}:c=${contrast}:s=${saturation}:h=${hue}`;
-        yield zmqSocket.send(command);
+        const vidCommand = `hue=b=${brightness}:c=${contrast}:s=${saturation}:h=${hue}`;
+        yield zmqSocket.send(vidCommand);
     });
 }
 function jumpToTime(timeInSeconds) {
     return __awaiter(this, void 0, void 0, function* () {
-        const command = `seek ${timeInSeconds}`;
-        yield zmqSocket.send(command);
+        const vidCommand = `seek ${timeInSeconds}`;
+        yield zmqSocket.send(vidCommand);
     });
 }
 function changePlaybackSpeed(speedFactor) {
     return __awaiter(this, void 0, void 0, function* () {
-        const command = `setpts=${1 / speedFactor}*PTS`;
-        zmqSocket.send(command);
+        const vidCommand = `setpts=${1 / speedFactor}*PTS`;
+        yield zmqSocket.send(vidCommand);
     });
 }
 // Other utility functions

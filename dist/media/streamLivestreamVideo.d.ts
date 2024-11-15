@@ -2,6 +2,7 @@ import ffmpeg from 'fluent-ffmpeg';
 import { MediaUdp } from '../client/voice/MediaUdp';
 import { Readable } from 'stream';
 import PCancelable from 'p-cancelable';
+export declare let command: ffmpeg.FfmpegCommand;
 export declare function streamLivestreamVideo(input: string | Readable, mediaUdp: MediaUdp, includeAudio?: boolean, customHeaders?: Record<string, string>): PCancelable<string>;
 export declare function updateOverlayText(newText: string): Promise<void>;
 export declare function applyColorFilter(brightness: number, contrast: number, saturation: number, hue: number): Promise<void>;
